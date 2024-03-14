@@ -12,11 +12,11 @@ const Menu = () => {
     }
     return(
         <div className={styles.menuContainer}> 
-            <div className={styles.iconWrapper}> 
-                <FontAwesomeIcon icon={faPencil} className={styles.icon} onClick={() =>handleMenuClick(MENU_ITEMS.PENCIL)} />
+            <div className={styles.iconWrapper} onClick={() =>handleMenuClick(MENU_ITEMS.PENCIL)} > 
+                <FontAwesomeIcon icon={faPencil} className={styles.icon} />
             </div>
-            <div className={styles.iconWrapper}> 
-                <FontAwesomeIcon icon={faEraser} className={styles.icon} onClick={() =>handleMenuClick(MENU_ITEMS.ERASER)}/>
+            <div className={styles.iconWrapper} onClick={() =>handleMenuClick(MENU_ITEMS.ERASER)}> 
+                <FontAwesomeIcon icon={faEraser} className={styles.icon} />
             </div>
             <div className={styles.iconWrapper}> 
                 <FontAwesomeIcon icon={faRotateLeft} className={styles.icon}/>
