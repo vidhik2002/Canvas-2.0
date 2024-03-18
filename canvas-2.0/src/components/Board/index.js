@@ -35,7 +35,10 @@ const Board = () => {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
                 context.fillStyle = 'white';
+                context.strokeStyle = color;
+                context.lineWidth = size;
                 context.fillRect(0, 0, canvas.width, canvas.height);
+
                 dispatch(actionItemClick(null));
                 return; // Return early to avoid further drawing operations
             }
