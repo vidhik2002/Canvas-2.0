@@ -15,6 +15,21 @@ const Board = () => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d')
 
+        if (actionMenuItem === MENU_ITEMS.CANCEL) {
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
+
+            context.fillStyle = 'white';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        dispatch(actionItemClick(null))
+    }, [actionMenuItem, dispatch])
+
+    useEffect(() => {
+        if (!canvasRef.current) return
+        const canvas = canvasRef.current;
+        const context = canvas.getContext('2d')
+
         if (actionMenuItem === MENU_ITEMS.DOWNLOAD) {
 
             const URL = canvas.toDataURL()
