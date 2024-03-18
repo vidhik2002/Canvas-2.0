@@ -4,7 +4,7 @@ import { COLORS, MENU_ITEMS } from "@/constants"
 const initialState = {
     [MENU_ITEMS.PENCIL]: {
         color: COLORS.BLACK,
-        size: 4
+        size: 15
     },
     [MENU_ITEMS.ERASER]: {
         color: COLORS.WHITE,
