@@ -8,6 +8,8 @@ const Board = () => {
     const {activeMenuItem, actionMenuItem} = useSelector((state) => state.menu)
     const {color, size} = useSelector((state) => state.toolbox[activeMenuItem])
     const shouldDraw = useRef(false)
+    const drawHistory = useRef([])
+    const historyPointer = useRef(0)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -15,28 +17,39 @@ const Board = () => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d')
 
-        if (actionMenuItem === MENU_ITEMS.CANCEL) {
-            canvas.width = window.innerWidth
-            canvas.height = window.innerHeight
-
-            context.fillStyle = 'white';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-        }
-        dispatch(actionItemClick(null))
-    }, [actionMenuItem, dispatch])
-
-    useEffect(() => {
-        if (!canvasRef.current) return
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d')
-
         if (actionMenuItem === MENU_ITEMS.DOWNLOAD) {
-
             const URL = canvas.toDataURL()
             const anchor = document.createElement('a')
             anchor.href = URL
             anchor.download = 'sketch.jpg'
             anchor.click()
+        }else if (actionMenuItem === MENU_ITEMS.CANCEL) {
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
+
+            context.fillStyle = 'white';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+        }else if (actionMenuItem === MENU_ITEMS.UNDO || actionMenuItem === MENU_ITEMS.REDO) {
+            if (actionMenuItem === MENU_ITEMS.UNDO && historyPointer.current === 0) {
+                // If only one item left to undo, reset canvas to initial state
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                context.fillStyle = 'white';
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                dispatch(actionItemClick(null));
+                return; // Return early to avoid further drawing operations
+            }
+            let newPointer = historyPointer.current;
+            if (actionMenuItem === MENU_ITEMS.UNDO && newPointer > 0) {
+                newPointer -= 1;
+            } else if (actionMenuItem === MENU_ITEMS.REDO && newPointer < drawHistory.current.length - 1) {
+                newPointer += 1;
+            }
+            if (newPointer !== historyPointer.current) {
+                const imageData = drawHistory.current[newPointer];
+                context.putImageData(imageData, 0, 0);
+                historyPointer.current = newPointer;
+            }
         }
         dispatch(actionItemClick(null))
     }, [actionMenuItem, dispatch])
@@ -90,6 +103,10 @@ const Board = () => {
 
         const handleMouseUp = (e) => {
             shouldDraw.current = false
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
+            drawHistory.current.push(imageData)
+            historyPointer.current = drawHistory.current.length - 1
+            console.log(historyPointer.current)
         }
 
 
