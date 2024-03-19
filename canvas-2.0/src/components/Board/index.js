@@ -12,7 +12,7 @@ const Board = () => {
     const historyPointer = useRef(0)
     const dispatch = useDispatch()
 
-    
+
     const handleImportImage = (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -50,10 +50,16 @@ const Board = () => {
         const context = canvas.getContext('2d')
 
         if (actionMenuItem === MENU_ITEMS.DOWNLOAD) {
+            const fileName = prompt("Enter the file name:", "sketch"); // Prompt for filename
+            if (fileName === null) { // If user cancels, do nothing
+                dispatch(actionItemClick(null));
+                return;
+            }
             const URL = canvas.toDataURL()
             const anchor = document.createElement('a')
             anchor.href = URL
-            anchor.download = 'sketch.jpg'
+            anchor.download = fileName.trim() || 'sketch';
+            // anchor.download = 'sketch.jpg'
             anchor.click()
         }else if (actionMenuItem === MENU_ITEMS.CANCEL) {
             canvas.width = window.innerWidth
