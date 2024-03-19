@@ -6,7 +6,7 @@ import { actionItemClick } from '@/slice/menuSlice'
 const Board = () => {
     const canvasRef = useRef(null);
     const {activeMenuItem, actionMenuItem} = useSelector((state) => state.menu)
-    const {color, size} = useSelector((state) => state.toolbox[activeMenuItem])
+    const {color, size, opacity} = useSelector((state) => state.toolbox[activeMenuItem])
     const shouldDraw = useRef(false)
     const drawHistory = useRef([])
     const historyPointer = useRef(0)
@@ -107,14 +107,15 @@ const Board = () => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d')
 
-        const changeConfig = (color, size) => {
+        const changeConfig = (color, size, opacity) => {
             context.strokeStyle = color
             context.lineWidth = size
+            context.globalAlpha = opacity
         }
-        changeConfig(color, size)
+        changeConfig(color, size, opacity)
 
         
-    }, [color, size])
+    }, [color, size, opacity])
 
     // mounting
     useLayoutEffect(() => {

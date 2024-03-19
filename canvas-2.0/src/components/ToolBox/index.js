@@ -2,14 +2,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.css'
 import cx from 'classnames';
 import { COLORS, MENU_ITEMS } from '@/constants'
-import { changeBrushSize, changeColor } from '@/slice/toolboxSlice'
+import { changeBrushSize, changeColor, changeOpacity } from '@/slice/toolboxSlice'
 
 const Toolbox = () => {
     const activeMenuItem = useSelector((state) => state.menu.activeMenuItem)
     const showStrokeTool = activeMenuItem === MENU_ITEMS.PENCIL
     const showBrushTool = activeMenuItem === MENU_ITEMS.PENCIL || MENU_ITEMS.ERASER
+    const showOpacityTool = activeMenuItem === MENU_ITEMS.PENCIL 
     const dispatch = useDispatch()
-    const {color, size} = useSelector((state) => state.toolbox[activeMenuItem])
+    const {color, size, opacity} = useSelector((state) => state.toolbox[activeMenuItem])
 
     const updateBrushSize = (e) => {
         dispatch(changeBrushSize({item: activeMenuItem, size: e.target.value}))
@@ -17,6 +18,11 @@ const Toolbox = () => {
     const updateColor = (newcolor) => {
         dispatch(changeColor({item: activeMenuItem, color: newcolor}))
     }
+    const updateOpacity = (e) => {
+        const newOpacity = parseFloat(e.target.value); // Convert value to number
+        console.log("opacity", newOpacity)
+        dispatch(changeOpacity({ item: activeMenuItem, opacity: newOpacity })); 
+    };
     return (
         <div className={styles.toolboxContainer}>
             { showStrokeTool && <div className={styles.toolItem}>
@@ -39,6 +45,13 @@ const Toolbox = () => {
                 <input type="range" min={1} max={100} step={1} onChange={updateBrushSize} value={size} />
                 </div>
             </div>}
+            {showOpacityTool && <div className={styles.toolItem}>
+                    <h4 className={styles.toolText}>Opacity</h4>
+                    <div className={styles.itemContainer}>
+                        <input type="range" min={0} max={1} step={0.001} onChange={updateOpacity} value={opacity} />
+                    </div>
+                </div>
+            }
             
         </div>
     )
