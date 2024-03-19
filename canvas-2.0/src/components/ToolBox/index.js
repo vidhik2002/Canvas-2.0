@@ -48,7 +48,7 @@ const Toolbox = () => {
             {showOpacityTool && <div className={styles.toolItem}>
                     <h4 className={styles.toolText}>Opacity</h4>
                     <div className={styles.itemContainer}>
-                        <input type="range" min={0} max={1} step={0.001} onChange={updateOpacity} value={opacity} />
+                        <input type="range" min={0} max={1} step={0.0001} onChange={updateOpacity} value={opacity} />
                     </div>
                 </div>
             }

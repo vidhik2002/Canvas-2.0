@@ -2,6 +2,7 @@ import { useRef, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MENU_ITEMS } from "@/constants";
 import { actionItemClick } from '@/slice/menuSlice'
+// import { SketchPicker } from 'react-color'
 
 const Board = () => {
     const canvasRef = useRef(null);
@@ -42,7 +43,39 @@ const Board = () => {
           img.src = event.target.result;
         };
         reader.readAsDataURL(file);
-      };
+    };
+
+    const handleColorChange = () => {
+        const input = document.createElement('input');
+        input.type = 'color';
+
+        // Adjust the position to move the color picker to the right side of the screen
+        input.style.position = 'fixed';
+        input.style.top = '50%'; // Center vertically
+        input.style.right = '10%'; // Move the color picker to the right side of the screen
+        input.style.transform = 'translate(-50%, -50%)';
+
+        // Correct the typo in the display property
+        input.style.display = 'absolute';
+        
+        // Add event listener to handle color change
+        input.addEventListener('input', () => {
+            const selectedColor = input.value;
+            const canvas = canvasRef.current;
+            const context = canvas.getContext('2d');
+            context.fillStyle = selectedColor; // Set the fill style to the selected color
+            context.fillRect(0, 0, canvas.width, canvas.height); // Fill the canvas with the selected color
+        });
+
+        input.click();
+        // input.addEventListener('change', () => {
+        //     document.body.removeChild(input); // Remove the color picker from the body
+        // });
+
+        // Append the input element to the body and trigger its click event
+        // document.body.appendChild(input);
+        
+    };
 
     useEffect(() => {
         if (!canvasRef.current) return
@@ -97,6 +130,8 @@ const Board = () => {
             input.accept = 'image/*';
             input.onchange = handleImportImage;
             input.click();
+        }else if (actionMenuItem === MENU_ITEMS.PAINT) {
+            handleColorChange()
         }
         dispatch(actionItemClick(null))
     }, [actionMenuItem, dispatch])

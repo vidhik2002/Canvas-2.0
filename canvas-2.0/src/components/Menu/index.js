@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencil, faEraser, faRotateLeft, faRotateRight, faFileArrowDown, faR, faSackXmark, faXmark, faCloudDownload, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faEraser, faRotateLeft, faRotateRight, faFileArrowDown, faR, faSackXmark, faXmark, faCloudDownload, faUpload, faPaintRoller } from '@fortawesome/free-solid-svg-icons'
 import styles from './index.module.css'
 import { MENU_ITEMS } from '@/constants'
 import cx from 'classnames'
@@ -36,9 +36,13 @@ const Menu = () => {
             <div className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.IMPORT)}> 
                 <FontAwesomeIcon icon={faUpload} className={styles.icon}/>
             </div>
+            <div className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.PAINT)}> 
+                <FontAwesomeIcon icon={faPaintRoller} className={styles.icon}/>
+            </div>
             <div className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.CANCEL)}> 
                 <FontAwesomeIcon icon={faXmark} className={styles.icon}/>
             </div>
+            
         </div>
     )
 }
