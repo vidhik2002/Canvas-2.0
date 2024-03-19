@@ -1,0 +1,3 @@
+.color-picker{
+    @apply absolute px-1 py-1;
+}

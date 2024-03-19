@@ -48,16 +48,13 @@ const Board = () => {
     const handleColorChange = () => {
         const input = document.createElement('input');
         input.type = 'color';
-
-        // Adjust the position to move the color picker to the right side of the screen
-        input.style.position = 'fixed';
-        input.style.top = '50%'; // Center vertically
-        input.style.right = '10%'; // Move the color picker to the right side of the screen
-        input.style.transform = 'translate(-50%, -50%)';
-
-        // Correct the typo in the display property
-        input.style.display = 'absolute';
+        // input.className= 'color-picker'; 
         
+        document.body.appendChild(input);
+        input.className = 'fixed top-[5vh] right-[5vw] w-1 h-1'
+
+        input.focus();
+        input.click();
         // Add event listener to handle color change
         input.addEventListener('input', () => {
             const selectedColor = input.value;
@@ -65,15 +62,15 @@ const Board = () => {
             const context = canvas.getContext('2d');
             context.fillStyle = selectedColor; // Set the fill style to the selected color
             context.fillRect(0, 0, canvas.width, canvas.height); // Fill the canvas with the selected color
+            input.click();
+        });
+        
+        // input.click();
+        input.addEventListener('change', () => {
+            document.body.removeChild(input); // Remove the color picker from the body
         });
 
-        input.click();
-        // input.addEventListener('change', () => {
-        //     document.body.removeChild(input); // Remove the color picker from the body
-        // });
-
-        // Append the input element to the body and trigger its click event
-        // document.body.appendChild(input);
+       
         
     };
 
@@ -100,6 +97,9 @@ const Board = () => {
 
             context.fillStyle = 'white';
             context.fillRect(0, 0, canvas.width, canvas.height);
+            context.strokeStyle = color;
+            context.lineWidth = size;
+
         }else if (actionMenuItem === MENU_ITEMS.UNDO || actionMenuItem === MENU_ITEMS.REDO) {
             if (actionMenuItem === MENU_ITEMS.UNDO && historyPointer.current === 0) {
                 // If only one item left to undo, reset canvas to initial state
