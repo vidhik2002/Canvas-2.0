@@ -16,7 +16,8 @@ const MENU_ITEMS = {
     UNDO: 'UNDO',
     REDO: 'REDO',
     DOWNLOAD: 'DOWNLOAD',
-    CANCEL: 'CANCEL'
+    CANCEL: 'CANCEL',
+    IMPORT: 'IMPORT'
 }
 
 export {COLORS, MENU_ITEMS}

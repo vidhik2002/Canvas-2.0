@@ -12,6 +12,38 @@ const Board = () => {
     const historyPointer = useRef(0)
     const dispatch = useDispatch()
 
+    
+    const handleImportImage = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+    
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = canvasRef.current;
+            const context = canvas.getContext("2d");
+    
+            // Clear canvas
+            context.clearRect(0, 0, canvas.width, canvas.height);
+    
+            // Resize canvas to fit image
+            canvas.width = img.width;
+            canvas.height = img.height;
+    
+            // Draw imported image on canvas
+            context.drawImage(img, 0, 0);
+    
+            // Save image data to draw history
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            drawHistory.current.push(imageData);
+            historyPointer.current = drawHistory.current.length - 1;
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      };
+
     useEffect(() => {
         if (!canvasRef.current) return
         const canvas = canvasRef.current;
@@ -53,6 +85,12 @@ const Board = () => {
                 context.putImageData(imageData, 0, 0);
                 historyPointer.current = newPointer;
             }
+        }else if (actionMenuItem === MENU_ITEMS.IMPORT) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = handleImportImage;
+            input.click();
         }
         dispatch(actionItemClick(null))
     }, [actionMenuItem, dispatch])
