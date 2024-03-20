@@ -18,28 +18,28 @@ const Menu = () => {
 
     return(
         <div className={styles.menuContainer}> 
+            {/* <div title="Kindly choose a background color in the beginning itself" className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.PAINT)}> 
+                <FontAwesomeIcon icon={faPaintRoller} className={styles.icon}/>
+            </div> */}
             <div className={cx(styles.iconWrapper, {[styles.active]: activeMenuItem === MENU_ITEMS.PENCIL})} onClick={() =>handleMenuClick(MENU_ITEMS.PENCIL)} > 
                 <FontAwesomeIcon icon={faPencil} className={styles.icon} />
             </div>
             <div className={cx(styles.iconWrapper, {[styles.active]: activeMenuItem === MENU_ITEMS.ERASER})} onClick={() =>handleMenuClick(MENU_ITEMS.ERASER)}> 
                 <FontAwesomeIcon icon={faEraser} className={styles.icon} />
             </div>
-            <div className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.UNDO)}> 
+            <div title="UNDO" className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.UNDO)}> 
                 <FontAwesomeIcon icon={faRotateLeft} className={styles.icon}/>
             </div>
-            <div className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.REDO)}> 
+            <div title="REDO" className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.REDO)}> 
                 <FontAwesomeIcon icon={faRotateRight} className={styles.icon}/>
             </div>
-            <div className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.DOWNLOAD)}> 
+            <div title="Download your sketch" className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.DOWNLOAD)}> 
                 <FontAwesomeIcon icon={faFileArrowDown} className={styles.icon}/>
             </div>
-            <div className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.IMPORT)}> 
+            <div title="Import your sketch" className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.IMPORT)}> 
                 <FontAwesomeIcon icon={faUpload} className={styles.icon}/>
-            </div>
-            <div className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.PAINT)}> 
-                <FontAwesomeIcon icon={faPaintRoller} className={styles.icon}/>
-            </div>
-            <div className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.CANCEL)}> 
+            </div>            
+            <div title="Clear the canvas" className={styles.iconWrapper} onClick={() =>handleActionItemClick(MENU_ITEMS.CANCEL)}> 
                 <FontAwesomeIcon icon={faXmark} className={styles.icon}/>
             </div>
             

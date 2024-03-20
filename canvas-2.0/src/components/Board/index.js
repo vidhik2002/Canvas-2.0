@@ -161,6 +161,11 @@ const Board = () => {
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
 
+
+        var canvasOffset = canvas.getBoundingClientRect();
+        var offsetX = canvasOffset.left;
+        var offsetY = canvasOffset.top;
+
         context.fillStyle = 'white';
         context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -175,12 +180,12 @@ const Board = () => {
         }
         const handleMouseDown = (e) => {
             shouldDraw.current = true
-            beginPath(e.clientX, e.clientY)
+            beginPath(e.clientX-offsetX, e.clientY-offsetY)
         }
 
         const handleMouseMove = (e) => {
             if (!shouldDraw.current) return
-            drawLine(e.clientX, e.clientY)
+            drawLine(e.clientX-offsetX, e.clientY-offsetY)
             
         }
 
@@ -189,18 +194,25 @@ const Board = () => {
             const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
             drawHistory.current.push(imageData)
             historyPointer.current = drawHistory.current.length - 1
-            console.log(historyPointer.current)
         }
+
+        const handleMouseLeave = () => {
+            shouldDraw.current = false;
+        };
 
 
         canvas.addEventListener('mousedown', handleMouseDown)
         canvas.addEventListener('mousemove', handleMouseMove)
         canvas.addEventListener('mouseup', handleMouseUp)
+        canvas.addEventListener('mouseup', handleMouseLeave)
+        
 
         return () => {
             canvas.removeEventListener('mousedown', handleMouseDown)
             canvas.removeEventListener('mousemove', handleMouseMove)
             canvas.removeEventListener('mouseup', handleMouseUp)
+            canvas.removeEventListener('mouseup', handleMouseLeave)
+
         }
 
     }, [])

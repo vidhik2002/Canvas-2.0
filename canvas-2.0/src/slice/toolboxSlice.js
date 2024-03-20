@@ -5,7 +5,7 @@ const initialState = {
     [MENU_ITEMS.PENCIL]: {
         color: COLORS.BLACK,
         size: 15,
-        opacity: 1
+        opacity: 0.2
     },
     [MENU_ITEMS.ERASER]: {
         color: COLORS.WHITE,
