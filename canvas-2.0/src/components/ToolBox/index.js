@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './index.module.css'
 import cx from 'classnames';
+import { socket } from "@/socket";
 import { COLORS, MENU_ITEMS } from '@/constants'
 import { changeBrushSize, changeColor, changeOpacity } from '@/slice/toolboxSlice'
 
@@ -14,14 +15,17 @@ const Toolbox = () => {
 
     const updateBrushSize = (e) => {
         dispatch(changeBrushSize({item: activeMenuItem, size: e.target.value}))
+        socket.emit('changeConfig', {color, size: e.target.value, opacity })
     }
     const updateColor = (newcolor) => {
         dispatch(changeColor({item: activeMenuItem, color: newcolor}))
+        socket.emit('changeConfig', {color: newcolor, size, opacity })
     }
     const updateOpacity = (e) => {
         const newOpacity = parseFloat(e.target.value); // Convert value to number
         console.log("opacity", newOpacity)
         dispatch(changeOpacity({ item: activeMenuItem, opacity: newOpacity })); 
+        socket.emit('changeConfig', {color, size, opacity: newOpacity })
     };
     return (
         <div className={styles.toolboxContainer}>
